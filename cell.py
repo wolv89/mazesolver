@@ -22,18 +22,28 @@ class Cell:
         return self.__centre
 
     def draw(self):
-        
+
+        # print(f"Drawing Cell @ {self.__centre.x} x {self.__centre.y} - {self.has_left_wall} {self.has_top_wall} {self.has_right_wall} {self.has_bottom_wall}")
+
         if self.has_left_wall:
             self.__win.draw_line(Line(self.__top_left, self.__bottom_left), "black")
+        else:
+            self.__win.draw_line(Line(self.__top_left, self.__bottom_left), "white")
         
         if self.has_top_wall:
             self.__win.draw_line(Line(self.__top_left, self.__top_right), "black")
+        else:
+            self.__win.draw_line(Line(self.__top_left, self.__top_right), "white")
         
         if self.has_right_wall:
             self.__win.draw_line(Line(self.__top_right, self.__bottom_right), "black")
+        else:
+            self.__win.draw_line(Line(self.__top_right, self.__bottom_right), "white")
         
         if self.has_bottom_wall:
             self.__win.draw_line(Line(self.__bottom_left, self.__bottom_right), "black")
+        else:
+            self.__win.draw_line(Line(self.__bottom_left, self.__bottom_right), "white")
 
     def draw_move(self, to_cell, undo=False):
 
