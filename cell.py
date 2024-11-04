@@ -58,3 +58,6 @@ class Cell:
             colour = "gray"
 
         self.__win.draw_line(Line(self.__centre, to_cell.get_centre()), colour)
+
+        self.__win.redraw()
+        time.sleep(0.01)

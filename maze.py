@@ -24,6 +24,7 @@ class Maze:
         self._break_entrance_and_exit()
         self._break_walls_r(0, 0)
         self._reset_cell_status()
+        self._solve_r(0, 0)
     
     def _create_cells(self):
         for cols in range(self.__num_rows):
@@ -99,3 +100,48 @@ class Maze:
         for row in self.__cells:
             for cl in row:
                 cl.visited = False
+
+    def _solve_r(self, i, j):
+
+        self.__cells[i][j].visited = True
+
+        if i == self.__num_rows - 1 and j == self.__num_cols - 1:
+            return True
+
+        # Left
+        if j > 0 and not self.__cells[i][j].has_left_wall and not self.__cells[i][j-1].visited:
+            self.__cells[i][j].draw_move(self.__cells[i][j-1])
+            found = self._solve_r(i, j-1)
+            if found:
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i][j-1], True)
+
+        # Up
+        if i > 0 and not self.__cells[i][j].has_top_wall and not self.__cells[i-1][j].visited:
+            self.__cells[i][j].draw_move(self.__cells[i-1][j])
+            found = self._solve_r(i-1, j)
+            if found:
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i-1][j], True)
+
+        # Right
+        if j < len(self.__cells[0]) - 1 and not self.__cells[i][j].has_right_wall and not self.__cells[i][j+1].visited:
+            self.__cells[i][j].draw_move(self.__cells[i][j+1])
+            found = self._solve_r(i, j+1)
+            if found:
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i][j+1], True)
+
+        # Down
+        if i < len(self.__cells) - 1 and not self.__cells[i][j].has_bottom_wall and not self.__cells[i+1][j].visited:
+            self.__cells[i][j].draw_move(self.__cells[i+1][j])
+            found = self._solve_r(i+1, j)
+            if found:
+                return True
+            else:
+                self.__cells[i][j].draw_move(self.__cells[i+1][j], True)
+
+        return False
