@@ -1,4 +1,6 @@
 
+import time
+
 from window import Window
 from line import Line
 from point import Point
@@ -17,6 +19,7 @@ class Cell:
         midy = y1 + abs(y2 - y1)/2
         self.__centre = Point(midx, midy)
         self.__win = window
+        self.visited = False
 
     def get_centre(self):
         return self.__centre
@@ -44,6 +47,9 @@ class Cell:
             self.__win.draw_line(Line(self.__bottom_left, self.__bottom_right), "black")
         else:
             self.__win.draw_line(Line(self.__bottom_left, self.__bottom_right), "white")
+
+        self.__win.redraw()
+        time.sleep(0.01)
 
     def draw_move(self, to_cell, undo=False):
 
